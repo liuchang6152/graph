@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>知识图谱</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="js/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="js/layuiadmin/style/admin.css" media="all">
+    <style>
+        .layui-layer-title {
+            background: #082041FF !important;
+            color: #fff !important;
+        }
+
+        .layui-layer-content {
+            background: #13325D;
+            color: #fff;
+        }
+
+        .layui-layer-btn {
+            background: #13325D;
+        }
+
+        .title-vertical {
+            display: inline-block;
+            background: #01F0FF;
+            width: 4px;
+            height: 28px;
+            margin-bottom: -8px;
+            margin-right: 8px;
+        }
+
+        /* .layadmin-pagetabs .layui-tab-title li:hover,
+      .layadmin-pagetabs .layui-tab-title li.layui-this{
+        background-color: #325085 !important;
+        color: #fff;
+      }
+      .layadmin-pagetabs{
+        background-color: #021D3B;
+        color: #fff;
+      } */
+
+        /* 测试代码 */
+        #app {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            position: absolute;
+            right: 0px;
+            top: 20%;
+            z-index: 19991066;
+            font-size: 18px;
+            background: #4775A9;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="layui-layout-body">
+<object classid="clsid:067A4418-EBAC-4394-BFBE-8C533BA6503A" id="h3c_IMOS_ActiveX" events="true" height="0" width="0">
+</object>
+<!-- <div id="app"> -->
+<!-- <form id="searchForm" onsubmit="return false;" class="form-inline searchForm">
+    <div class="form-group">
+      <label class="control-label">请输入通道号：</label>
+      <input id="appText" type="text" accesskey="p" autocomplete="off" placeholder="请输入通道号" name="password" value="">
+    </div>
+    <div class="text-center" onclick="nsSave()">
+                  <button type="button" class="btn btn-primary"><i class="icon-save"></i> 保 存</button>&nbsp;&nbsp;
+              </div>
+  </form> -->
+<!-- </div> -->
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <!-- 报警器报警暂时注释 -->
+                <li id="missCalls" class="layui-nav-item layui-hide-xs" lay-unselect onclick="alarmFun()" ;>
+                    <a href="javascript:;" title="报警器报警">
+                        <i class="layui-icon layui-icon-fire"></i><span class="layui-badge" id="alarm">0</span>
+                    </a>
+                </li>
+                <!-- 天津视频 -->
+                <!-- <li id='manualss' class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" title="测试一下天津视频" onclick="addIframe('http://www.baidu.com')">
+                      <i class="layui-icon layui-icon-add-1"></i>
+                    </a>
+                  </li> -->
+                <li id="alarmCall" class="layui-nav-item layui-hide-xs" lay-unselect onclick="numCall()" ;>
+                    <a href="javascript:;" title="自动报警">
+                        <i class="layui-icon layui-icon-about"></i><span class="layui-badge" id="numCalls">0</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="http://10.102.202.25:81/guobozijin/GISQuery/index.html?orign=MTAwMTAwMjI=&screen2=true"
+                       id="btn_bigScreen" target="_blank" title="大屏">
+                        <i class="layui-icon layui-icon-location"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="theme">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="note">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                </li>
+                <li id='manual' style="display:none;" class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" title="手动处警" onclick="HandAlarm();" id="HandAlarm">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                    </a>
+                </li>
+                <li id="missCall" style="display:none;" class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" title="未接来电" onclick="miessCall();">
+                        <i class="layui-icon layui-icon-notice"></i><span class="layui-badge" id="callNum">0</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;">
+                        <cite id="userTeam"></cite>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-user"></i>
+                        <cite id="userName"></cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <!-- <dd><a href="javascript:;">个人信息</a></dd>
+                         <dd><a href="javascript:;">修改密码</a></dd>
+                         <dd><a href="javascript:;">个人偏好</a></dd>
+                         <dd><a href="javascript:;">版本信息</a></dd>
+                         <dd><a href="javascript:;">帮助指南</a></dd> -->
+                        <dd><a id="closeNs" href="javascript:;">注销</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="fullscreen">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="home/console.html">
+                    <span>消防指挥系统</span>
+                </div>
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                    lay-filter="layadmin-system-side-menu">
+                    <!-- <li data-name="home" class="layui-nav-item">
+                      <a href="javascript:;" lay-tips="应急值守" lay-direction="2">
+                        <i class="layui-icon layui-icon-home"></i>
+                        <cite>应急值守</cite>
+                      </a>
+                      <dl class="layui-nav-child">
+                        <dd data-name="console">
+                          <a lay-href="../../html/edd/MsgSchedul/VehicleStatus.html">中队值守</a>
+                        </dd>
+                      </dl>
+                    </li> -->
+                    <li data-name="template" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="接警" lay-direction="2">
+                            <i class="layui-icon layui-icon-template"></i>
+                            <cite>接警</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console">
+                                <a onclick="OpenHO()">手动接警</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a onclick="HandAlarm()">手动处警</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a onclick="untreated()">未处理视频报警</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a onclick="DoShowIFrame()">天津视频</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="app" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="警情调度" lay-direction="2">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <cite>警情调度</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console">
+                                <a lay-href="../../html/em/MsgSendGB/index.html?PageModel=0">应急通知发送</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/em/MsgTrackGB/index.html?PageModel=0">应急通知跟踪</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ac/InitMeeting/index.html">音频会议</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/bc/AddressBookGB/Index.html">通讯录</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ap/VideoSurveillance/Index.html">视频监控</a>
+                                <!-- <a lay-href="../../html/ap/VideoSurveillance/yangZi.html">视频监控</a> -->
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li data-name="app" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="警情历史" lay-direction="2">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <cite>警情历史</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console">
+                                <a lay-href="../../html/ap/FireAlarm/Index.html">历史记录查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/em/VoiceResearch/Index.html">录音查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ac/MeetingRecord/index.html">会议记录</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ap/processedVideo/index.html">已处理视频报警</a>
+                            </dd>
+                        </dl>
+
+                    </li>
+                    <li data-name="app" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="应急查询" lay-direction="2">
+                            <i class="layui-icon layui-icon-app"></i>
+                            <cite>应急查询</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/TeamGB/query.html">应急队伍查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/EmrgMtrlGB/query.html">应急物资查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/ExpertGB/query.html">应急专家查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/MSDSGB/query.html">危化品信息查询</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/EmergencyPlanForAPGB/Index.html">应急预案查询</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li data-name="set" class="layui-nav-item">
+                        <a id="ECS_DEV_RCWH" href="javascript:;" lay-tips="日常维护" lay-direction="2">
+                            <i class="layui-icon layui-icon-set"></i>
+                            <cite>日常维护</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a lay-href="../../html/bc/UserGB/index.html">应急联系人维护</a>
+                            </dd>
+                            <dd>
+                                <a lay-href="../../html/bc/OrgGB/index.html">组织机构</a>
+                            </dd>
+                            <dd>
+                                <a lay-href="../../html/bc/MsgDutyGB/index.html">企业职务维护</a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">工厂模型配置<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/RiskAreaGB/index.html">安全风险区</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/OptlRiskZoneGB/index.html">作业风险区</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/RiskAnlsObjGB/index.html">风险分析对象</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd>
+                                <a id="ECS_DEV_ZBBWH" lay-href="../../html/edd/MsgSchedulGB/Index.html">值班表维护</a>
+                            </dd>
+                            <dd>
+                                <a lay-href="../../html/edd/PresentJeevesGB/index.html">占道维护</a>
+                            </dd>
+                            <dd>
+                                <a lay-href="../../html/rtt/VideoSettingsGB/Index.html">视频配置</a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">通讯组维护<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/em/CommGroupGB/index.html">通讯组维护</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/em/CommGroupGB/CommGroupAllot.html">通讯组分配</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">应急队伍维护<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/ConstitutionConfigGB/index.html">应急建制</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/TeamGB/index.html">应急队伍</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/VehicleGB/index.html">应急车辆</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/PersonnelGB/index.html">应急处置人员</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/VehicleMaintainGB/Index.html">应急车辆类型</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/TeamDutyGB/index.html">中队责任配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/em/DeviceGB/index.html">应急设备维护</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/em/TeamDeviceConfigGB/index.html">设备联动配置</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">应急物资维护<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/MtrlStorageGB/index.html">应急存放点配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/EmrgMtrlGB/index.html">应急物资配置</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd>
+                                <a lay-href="../../html/rtt/EmergencyPlanGB/index.html">应急预案维护<span
+                                        class="layui-nav-child"></span></a>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">危化品信息维护<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/MSDSGB/index.html">危化品信息</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/MSDSGB/MSDSDeploy.html">危化品配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/rtt/MSDSGB/MSDSFrimAtb.html">危化品属性管理</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/EmergencyEquipmentGB/Index.html">应急装备</a>
+                            </dd>
+                            <dd class="">
+                                <a lay-href="../../html/rtt/FireUnitsGB/index.html">相关消防单位<span class="layui-nav-child"></span></a>
+                            </dd>
+                            <dd class="">
+                                <a lay-href="../../html/rtt/MedicalInstitutionGB/index.html">医疗机构<span
+                                        class="layui-nav-child"></span></a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/rtt/ExpertGB/index.html">应急专家</a>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ap/AcceptWarningConfigGB/index.html">接警单元配置</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;">应急实时监测模型<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/RiskRankGB/index.html">风险分析点风险等级管理</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/RiskAnalysisPointGB/index.html">风险分析点配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/MonitorSiteGB/index.html">实时监测点配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/MonitorFactorGB/index.html">实时监测点指标配置</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="../../html/bc/AccidentCategoryGB/index.html">风险分析点事故发类管理</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                            <dd data-name="console">
+                                <a lay-href="../../html/ma/ActualTimeLogGB/index.html">实时监测报警日志查询</a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;">应急地图<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console">
+                                        <a lay-href="http://10.102.202.25:81/guobozijin/ptIconTool/indexICON.html?MTAwMTAwMjI=">点图标维护</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a lay-href="http://10.102.202.25:81/guobozijin/GISEditor/editorpt.html?MTAwMTAwMjI=">图形编辑器</a>
+                                    </dd>
+                                    <dd data-name="console">
+                                        <a
+                                                lay-href="http://10.102.202.25:81/guobozijin/GISQuery/index.html?orign=MTAwMTAwMjI=">地图综合查询</a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i
+                            class="layui-icon layui-icon-home"></i></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-F-tabsbody-item layui-F-show">
+                <iframe id="home" src="" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+<iframe style="width:0px; height: 0px; display: none;" id="page_Iframe"></iframe>
+<script src="js/jquery/jquery.min.js"></script>
+<script src="js/layuiadmin/layui/layui.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/miniui/miniui.js"></script>
+
+<script type="text/javascript">
+    layui.config({
+        base: 'js/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use('index');
+</script>
+</body>
+
+</html>
